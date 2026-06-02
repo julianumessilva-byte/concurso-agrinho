@@ -1,0 +1,54 @@
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS
+   ========================================================================== */
+:root {
+    --primary-color: #2c5e3b; /* Verde Agro */
+    --secondary-color: #8da254; /* Verde Claro/Sustentável */
+    --dark-color: #2b261d; /* Terra Escuro */
+    --light-color: #f4f7f5; /* Fundo Claro */
+    --accent-color: #e67e22; /* Laranja de Inovação/Sol */
+    --card-back: #34495e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   HEADER & NAVEGAÇÃO
+   ========================================================================== */
+header {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 6rem 2rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+nav {
+    background-color: var(--primary-color);
+    position: sticky;
+    top: 0;
+    z
