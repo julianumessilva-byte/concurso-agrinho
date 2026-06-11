@@ -7,30 +7,86 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <!-- Cabeçalho Principal Semântico -->
     <header>
-        <div class="container">
-            <h1>Agro <span class="highlight">Sustentável</span></h1>
-            <nav>
-                <ul>
-                    <li><a href="#artigos">Artigos</a></li>
-                    <li><a href="#curiosidades">Inovação</a></li>
-                    <li><a href="#jogo">Jogo da Memória</a></li>
-                </ul>
-            </nav>
+        <div class="header-container">
+            <h1>Agro Forte, Futuro Sustentável</h1>
+            <p>Equilíbrio entre produção e meio ambiente</p>
+            <button id="toggle-dark-mode" aria-label="Alternar modo escuro">Alternar Modo</button>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Agro Forte, Futuro Sustentável</h2>
-            <p>O equilíbrio perfeito entre a alta produtividade e a preservação do meio ambiente.</p>
-        </div>
-    </section>
+    <!-- Menu de Navegação -->
+    <nav>
+        <ul>
+            <li><a href="#artigos">Artigos</a></li>
+            <li><a href="#mapas">Mapas do Agro</a></li>
+            <li><a href="#jogo">Jogo Interativo</a></li>
+        </ul>
+    </nav>
 
-    <section id="artigos" class="container section">
-        <h2 class="section-title">Estudos & Artigos Científicos</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>ILPF: Integração Lavoura-Pecuária-Floresta</h3>
-                <p>Estudos da EMBRAPA demonstram que o sistema ILPF otimiza o uso da terra, ele
+    <!-- Conteúdo Principal -->
+    <main>
+        <!-- Seção de Boas-vindas com Formulário Interativo -->
+        <section id="identificacao">
+            <h2>Bem-vindo ao Portal</h2>
+            <div class="form-group">
+                <label for="username">Digite seu nome para iniciar:</label>
+                <input type="text" id="username" placeholder="Seu nome aqui...">
+                <button id="btn-saludar">Entrar</button>
+            </div>
+            <p id="boas-vindas-msg"></p>
+        </section>
+
+        <!-- Seção de Artigos e Novidades -->
+        <section id="artigos">
+            <h2>Novidades e Artigos: O Agro no Paraná</h2>
+            <article>
+                <h3>Tecnologia no Campo e Sustentabilidade</h3>
+                <p>O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas sustentáveis, como o plantio direto e a rotação de culturas de milho e soja, reduzindo o impacto ambiental.</p>
+            </article>
+            <article>
+                <h3>O Equilíbrio Essencial</h3>
+                <p>Produzir alimentos de forma eficiente mantendo as florestas e recursos hídricos preservados é o maior desafio e a maior conquista dos produtores paranaenses.</p>
+            </article>
+        </section>
+
+        <!-- Seção de Mapas Interativos -->
+        <section id="mapas">
+            <h2>Mapas de Produção do Paraná</h2>
+            <p>Clique nos botões abaixo para alternar a visualização dos dados de produção sustentável por região do estado.</p>
+            <div class="map-controls">
+                <button class="btn-mapa" data-regiao="Norte">Região Norte (Café e Soja)</button>
+                <button class="btn-mapa" data-regiao="Oeste">Região Oeste (Milho e Aves)</button>
+                <button class="btn-mapa" data-regiao="Sul">Região Sul (Grãos e Silvicultura)</button>
+            </div>
+            <div id="map-display" class="map-box">
+                <p id="map-text">Selecione uma região acima para visualizar os dados de sustentabilidade.</p>
+            </div>
+        </section>
+
+        <!-- Seção do Jogo Interativo (Requisito Temático) -->
+        <section id="jogo">
+            <h2>Jogo Interativo: Colheita Sustentável</h2>
+            <p>Clique rapidamente nos grãos sustentáveis de <strong>Milho</strong> e <strong>Soja</strong> para coletá-los antes que sumam! Evite desperdício.</p>
+            
+            <div class="game-controls">
+                <button id="btn-start-game">Iniciar Colheita</button>
+                <div class="score-board">Pontuação: <span id="score">0</span></div>
+            </div>
+
+            <div id="game-canvas">
+                <!-- Os grãos serão gerados dinamicamente via JavaScript aqui -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé com Créditos Obrigatórios -->
+    <footer>
+        <p>&copy; 2026 Concurso Agrinho. Desenvolvido por Estudante do Ensino Médio.</p>
+        <p>Créditos das mídias: Elementos visuais autorais customizados via ferramentas digitais.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
