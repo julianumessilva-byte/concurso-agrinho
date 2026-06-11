@@ -65,14 +65,26 @@
             </div>
         </section>
 
-        <!-- Seção do Jogo Interativo (Requisito Temático) -->
+        <!-- Seção do Jogo Interativo Avançado -->
         <section id="jogo">
-            <h2>Jogo Interativo: Colheita Sustentável</h2>
-            <p>Clique rapidamente nos grãos sustentáveis de <strong>Milho</strong> e <strong>Soja</strong> para coletá-los antes que sumam! Evite desperdício.</p>
+            <h2>Jogo Interativo: Colheita Sustentável Avançada</h2>
+            <p>Selecione a dificuldade e clique nos grãos saudáveis. Evite os <strong>Grãos Estragados (❌)</strong>!</p>
             
             <div class="game-controls">
+                <label for="select-dificuldade">Dificuldade Inicial:</label>
+                <select id="select-dificuldade">
+                    <option value="facil">Fácil (Estágio Inicial)</option>
+                    <option value="medio">Médio (Manejo Integrado)</option>
+                    <option value="dificil">Difícil (Crise Climática)</option>
+                </select>
                 <button id="btn-start-game">Iniciar Colheita</button>
-                <div class="score-board">Pontuação: <span id="score">0</span></div>
+            </div>
+
+            <!-- Painel de Status do Jogo -->
+            <div class="status-panel">
+                <div class="status-item">Fase: <span id="game-level">1</span></div>
+                <div class="status-item">Tempo: <span id="game-timer">30</span>s</div>
+                <div class="status-item">Pontuação: <span id="score">0</span></div>
             </div>
 
             <div id="game-canvas">
