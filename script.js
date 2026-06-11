@@ -1,249 +1,249 @@
-// ==========================================
-// CONFIGURAÇÕES E MANIPULAÇÃO DO DOM INICIAIS
-// ==========================================
+// A trava de segurança abaixo garante que o JS só execute após o HTML estar carregado na memória do navegador
+window.addEventListener('DOMContentLoaded', () => {
 
-const btnDarkMode = document.getElementById('toggle-dark-mode');
-const btnSaludar = document.getElementById('btn-saludar');
-const inputUsername = document.getElementById('username');
-const msgBoasVindas = document.getElementById('boas-vindas-msg');
+    // ==========================================
+    // SELEÇÃO DE ELEMENTOS DO DOM
+    // ==========================================
+    const btnDarkMode = document.getElementById('toggle-dark-mode');
+    const btnSaludar = document.getElementById('btn-saludar');
+    const inputUsername = document.getElementById('username');
+    const msgBoasVindas = document.getElementById('boas-vindas-msg');
 
-const mapRegionTitle = document.getElementById('map-region-title');
-const mapText = document.getElementById('map-text');
-const barBio = document.getElementById('bar-bio');
-const barMata = document.getElementById('bar-mata');
-const barRotacao = document.getElementById('bar-rotacao');
+    const mapRegionTitle = document.getElementById('map-region-title');
+    const mapText = document.getElementById('map-text');
+    const barBio = document.getElementById('bar-bio');
+    const barMata = document.getElementById('bar-mata');
+    const barRotacao = document.getElementById('bar-rotacao');
 
-const canvasJogo = document.getElementById('game-canvas');
-const displayScore = document.getElementById('score');
-const btnStartGame = document.getElementById('btn-start-game');
+    const canvasJogo = document.getElementById('game-canvas');
+    const displayScore = document.getElementById('score');
+    const btnStartGame = document.getElementById('btn-start-game');
+    const selectDificuldade = document.getElementById('select-dificuldade');
+    const displayLevel = document.getElementById('game-level');
+    const displayTimer = document.getElementById('game-timer');
 
-// Elementos da Janela Modal de Artigos
-const modal = document.getElementById('article-modal');
-const modalTitle = document.getElementById('modal-title');
-const modalBody = document.getElementById('modal-body');
-const closeModal = document.getElementById('close-modal');
-
-// 1. Alternador de Modo Escuro
-btnDarkMode.addEventListener('click', () => {
-    if (document.documentElement.getAttribute('data-theme') === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
+    // ==========================================
+    // 1. ALTERNADOR DE MODO ESCURO
+    // ==========================================
+    if (btnDarkMode) {
+        btnDarkMode.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        });
     }
-});
 
-// 2. Processamento do Nome do Usuário
-btnSaludar.addEventListener('click', () => {
-    const nomeUsuario = inputUsername.value.trim();
-    if (nomeUsuario !== "") {
-        msgBoasVindas.textContent = `Olá, ${nomeUsuario}! Explore o portal e pratique a sustentabilidade no nosso minijogo.`;
-        msgBoasVindas.style.color = "var(--primary-color)";
-    } else {
-        msgBoasVindas.textContent = "Por favor, digite um nome válido.";
-        msgBoasVindas.style.color = "red";
+    // ==========================================
+    // 2. BOAS-VINDAS PERSONALIZADAS
+    // ==========================================
+    if (btnSaludar) {
+        btnSaludar.addEventListener('click', () => {
+            const nomeUsuario = inputUsername.value.trim();
+            if (nomeUsuario !== "") {
+                msgBoasVindas.textContent = `Olá, ${nomeUsuario}! Explore o portal e pratique a sustentabilidade no nosso minijogo.`;
+                msgBoasVindas.style.color = "var(--primary-color)";
+            } else {
+                msgBoasVindas.textContent = "Por favor, digite um nome válido.";
+                msgBoasVindas.style.color = "red";
+            }
+        });
     }
-});
 
-// ==========================================
-// BANCO DE DADOS E EVENTOS DE ARTIGOS (LEITURA COMPLETA)
-// ==========================================
-
-const TEXTOS_ARTIGOS = {
-    tecnologia: {
-        titulo: "Tecnologia no Campo e Sustentabilidade",
-        conteudo: "<p>O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas modernas controladas por softwares de monitoramento de precisão.</p><p>Com o auxílio de drones e sensores de umidade no solo, os produtores paranaenses conseguem aplicar fertilizantes e água na quantidade exata demandada pelas plantas, reduzindo drasticamente o desperdício de recursos ambientais.</p><p>Essa sinergia entre inovação tecnológica e conservação é o pilar que garante a longevidade econômica e ecológica do ecossistema produtivo local.</p>"
-    },
-    equilibrio: {
-        titulo: "O Equilíbrio Essencial",
-        conteudo: "<p>Produzir alimentos em escala para alimentar a população mantendo as florestas nativas e bacias hidrográficas intactas é o centro do tema Agrinho 2026.</p><p>O verdadeiro equilíbrio sustentável demonstra que a economia e o meio ambiente não são rivais, mas sim aliados indispensáveis. Áreas com florestas preservadas regulam as chuvas locais, protegendo diretamente as safras comerciais contra estiagens severas de clima.</p>"
-    },
-    solo: {
-        titulo: "Manejo de Solo no Paraná",
-        conteudo: "<p>A terra é o recurso mais precioso do agricultor. No Paraná, a técnica milenar do plantio direto — onde o solo não é revolvido antes da semeadura — impede processos erosivos decorrentes de chuvas fortes.</p><p>Adicionalmente, a rotação planejada entre as culturas de milho de inverno e soja de verão quebra ciclos biológicos de pragas e repõe nitrogênio orgânico nas camadas do solo de maneira totalmente natural, eliminando a dependência excessiva de compostos químicos artificiais.</p>"
-    }
-};
-
-// 3. Funcionalidade: Abertura Dinâmica do Artigo no Modal via Injeção de Conteúdo
-const botoesArtigo = document.querySelectorAll('.btn-read-article');
-botoesArtigo.forEach(botao => {
-    botao.addEventListener('click', (e) => {
-        const idArtigo = e.target.getAttribute('data-id');
-        const artigo = TEXTOS_ARTIGOS[idArtigo];
-
-        if (artigo) {
-            modalTitle.textContent = artigo.titulo;
-            modalBody.innerHTML = artigo.conteudo;
-            modal.classList.add('active'); // Exibe o modal manipulando classes do CSS
-        }
+    // ==========================================
+    // 3. INTERATIVIDADE DA SEÇÃO DE ARTIGOS
+    // ==========================================
+    const botoesArtigo = document.querySelectorAll('.btn-artigo');
+    botoesArtigo.forEach(botao => {
+        botao.addEventListener('click', () => {
+            const idArtigo = Math.random(); // Atribuição neutra técnica
+            const artigoTag = botao.getAttribute('data-artigo');
+            const conteudo = document.getElementById(`artigo-${artigoTag}`);
+            const seta = botao.querySelector('.seta-status');
+            
+            if (conteudo && seta) {
+                if (conteudo.classList.contains('open')) {
+                    conteudo.classList.remove('open');
+                    seta.textContent = '▼';
+                } else {
+                    conteudo.classList.add('open');
+                    seta.textContent = '▲';
+                }
+            }
+        });
     });
-});
 
-// Fechar Modal nos gatilhos de clique
-closeModal.addEventListener('click', () => modal.classList.remove('active'));
-window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
-});
-
-// ==========================================
-// PAINEL DE MAPAS E GRÁFICOS DINÂMICOS
-// ==========================================
-
-const DADOS_MAPA = {
-    Norte: {
-        titulo: "Região Norte (Manejo Integrado)",
-        texto: "Destaque nacional em técnicas de conservação e transição agroecológica. Forte controle biológico de pragas sobre as plantações de soja.",
-        bioinsumos: 75, preservacao: 60, rotacao: 85
-    },
-    Oeste: {
-        titulo: "Região Oeste (Energia Limpa)",
-        texto: "Pioneira no ecossistema de biodigestores. Transforma resíduos da lavoura de milho e da pecuária em eletricidade limpa e sustentável.",
-        bioinsumos: 90, preservacao: 55, rotacao: 70
-    },
-    Sul: {
-        titulo: "Região Sul (Preservação e Grãos)",
-        texto: "Forte aderência ao sistema de plantio direto protetor do solo. Excelente integração com programas estaduais de proteção de matas nativas ciliares.",
-        bioinsumos: 65, preservacao: 88, rotacao: 95
-    }
-};
-
-const botoesMapa = document.querySelectorAll('.btn-mapa');
-botoesMapa.forEach(botao => {
-    botao.addEventListener('click', (e) => {
-        const regiao = e.target.getAttribute('data-regiao');
-        const dados = DADOS_MAPA[regiao];
-
-        if (dados) {
-            mapRegionTitle.textContent = dados.titulo;
-            mapText.textContent = dados.texto;
-            barBio.style.width = `${dados.bioinsumos}%`;
-            barBio.textContent = `${dados.bioinsumos}%`;
-            barMata.style.width = `${dados.preservacao}%`;
-            barMata.textContent = `${dados.preservacao}%`;
-            barRotacao.style.width = `${dados.rotacao}%`;
-            barRotacao.textContent = `${dados.rotacao}%`;
+    // ==========================================
+    // 4. PAINEL DE MAPAS E GRÁFICOS DINÂMICOS
+    // ==========================================
+    const DADOS_MAPA = {
+        Norte: {
+            titulo: "Região Norte (Manejo Integrado)",
+            texto: "Destaque nacional em técnicas de conservação e transição agroecológica. Forte controle biológico de pragas sobre as plantações de soja.",
+            bioinsumos: 75, preservacao: 60, rotacao: 85
+        },
+        Oeste: {
+            titulo: "Região Oeste (Energia Limpa)",
+            texto: "Pioneira no ecossistema de biodigestores. Transforma resíduos da lavoura de milho e da pecuária em eletricidade limpa e sustentável.",
+            bioinsumos: 90, preservacao: 55, rotacao: 70
+        },
+        Sul: {
+            titulo: "Região Sul (Preservação e Grãos)",
+            texto: "Forte aderência ao sistema de plantio direto protetor do solo. Excelente integração com programas estaduais de proteção de matas nativas ciliares.",
+            bioinsumos: 65, preservacao: 88, rotacao: 95
         }
+    };
+
+    const botoesMapa = document.querySelectorAll('.btn-mapa');
+    botoesMapa.forEach(botao => {
+        botao.addEventListener('click', (e) => {
+            const regiao = e.target.getAttribute('data-regiao');
+            const dados = DADOS_MAPA[regiao];
+
+            if (dados && mapRegionTitle && mapText) {
+                mapRegionTitle.textContent = dados.titulo;
+                mapText.textContent = dados.texto;
+
+                barBio.style.width = `${dados.bioinsumos}%`;
+                barBio.textContent = `${dados.bioinsumos}%`;
+                
+                barMata.style.width = `${dados.preservacao}%`;
+                barMata.textContent = `${dados.preservacao}%`;
+                
+                barRotacao.style.width = `${dados.rotacao}%`;
+                barRotacao.textContent = `${dados.rotacao}%`;
+            }
+        });
     });
-});
 
-// ==========================================
-// LÓGICA E MECÂNICA DO JOGO AVANÇADO
-// ==========================================
+    // ==========================================
+    // 5. LÓGICA DO JOGO AVANÇADO
+    // ==========================================
+    const CONFIG_DIFICULDADE = {
+        facil: { tempoAparicao: 1200, chanceEstragado: 0.1, tempoFase: 30 },
+        medio: { tempoAparicao: 800, chanceEstragado: 0.25, tempoFase: 25 },
+        dificil: { tempoAparicao: 500, chanceEstragado: 0.4, tempoFase: 20 }
+    };
 
-const CONFIG_DIFICULDADE = {
-    facil: { tempoAparicao: 1200, chanceEstragado: 0.1, tempoFase: 30 },
-    medio: { tempoAparicao: 800, chanceEstragado: 0.25, tempoFase: 25 },
-    dificil: { tempoAparicao: 500, chanceEstragado: 0.4, tempoFase: 20 }
-};
+    let pontuacao = 0;
+    let faseAtual = 1;
+    let tempoRestante = 30;
+    let jogoAtivo = false;
+    let intervaloGerador;
+    let intervaloCronometro;
+    let configAtual;
 
-let pontuacao = 0;
-let faseAtual = 1;
-let tempoRestante = 30;
-let jogoAtivo = false;
-let intervaloGerador;
-let intervaloCronometro;
-let configAtual;
-
-const selectDificuldade = document.getElementById('select-dificuldade');
-const displayLevel = document.getElementById('game-level');
-const displayTimer = document.getElementById('game-timer');
-
-btnStartGame.addEventListener('click', () => {
-    if (!jogoAtivo) {
-        iniciarJogo();
-    } else {
-        encerrarJogo(false);
-    }
-});
-
-function iniciarJogo() {
-    jogoAtivo = true;
-    pontuacao = 0;
-    faseAtual = 1;
-    
-    const difEscolhida = selectDificuldade.value;
-    configAtual = { ...CONFIG_DIFICULDADE[difEscolhida] };
-    tempoRestante = configAtual.tempoFase;
-
-    displayScore.textContent = pontuacao;
-    displayLevel.textContent = faseAtual;
-    displayTimer.textContent = tempoRestante;
-    btnStartGame.textContent = "Parar Colheita";
-    selectDificuldade.disabled = true;
-
-    intervaloGerador = setInterval(criarGraoAvancado, configAtual.tempoAparicao);
-    intervaloCronometro = setInterval(atualizarCronometro, 1000);
-}
-
-function atualizarCronometro() {
-    tempoRestante--;
-    displayTimer.textContent = tempoRestante;
-
-    if (tempoRestante > 0 && tempoRestante % 10 === 0) {
-        avancarFase();
+    if (btnStartGame) {
+        btnStartGame.addEventListener('click', () => {
+            if (!jogoAtivo) {
+                iniciarJogo();
+            } else {
+                encerrarJogo(false);
+            }
+        });
     }
 
-    if (tempoRestante <= 0) {
-        encerrarJogo(true);
-    }
-}
+    function iniciarJogo() {
+        jogoAtivo = true;
+        pontuacao = 0;
+        faseAtual = 1;
+        
+        const difEscolhida = selectDificuldade.value;
+        configAtual = { ...CONFIG_DIFICULDADE[difEscolhida] };
+        tempoRestante = configAtual.tempoFase;
 
-function avancarFase() {
-    faseAtual++;
-    displayLevel.textContent = faseAtual;
-    
-    clearInterval(intervaloGerador);
-    configAtual.tempoAparicao = Math.max(250, configAtual.tempoAparicao * 0.85);
-    configAtual.chanceEstragado = Math.min(0.6, configAtual.chanceEstragado + 0.05);
-    
-    intervaloGerador = setInterval(criarGraoAvancado, configAtual.tempoAparicao);
-}
-
-function criarGraoAvancado() {
-    if (!jogoAtivo) return;
-
-    const grao = document.createElement('div');
-    grao.classList.add('grain');
-
-    const sorteioTipo = Math.random();
-    let tipoFinal = 'milho';
-
-    if (sorteioTipo < configAtual.chanceEstragado) {
-        tipoFinal = 'estragado';
-        grao.classList.add('estragado');
-        grao.textContent = '❌';
-    } else {
-        tipoFinal = Math.random() > 0.5 ? 'milho' : 'soja';
-        grao.classList.add(tipoFinal);
-        grao.textContent = tipoFinal === 'milho' ? '🌽' : '🫘';
-    }
-
-    const maxX = canvasJogo.clientWidth - 45;
-    const maxY = canvasJogo.clientHeight - 45;
-    grao.style.left = `${Math.floor(Math.random() * maxX)}px`;
-    grao.style.top = `${Math.floor(Math.random() * maxY)}px`;
-
-    grao.addEventListener('click', () => {
-        if (tipoFinal === 'estragado') {
-            pontuacao = Math.max(0, pontuacao - 15);
-        } else {
-            pontuacao += 10 * faseAtual;
-        }
         displayScore.textContent = pontuacao;
-        grao.remove();
-    });
+        displayLevel.textContent = faseAtual;
+        displayTimer.textContent = tempoRestante;
+        btnStartGame.textContent = "Parar Colheita";
+        selectDificuldade.disabled = true;
 
-    canvasJogo.appendChild(grao);
+        intervaloGerador = setInterval(criarGraoAvancado, configAtual.tempoAparicao);
+        intervaloCronometro = setInterval(atualizarCronometro, 1000);
+    }
 
-    const tempoDeVida = Math.max(600, configAtual.tempoAparicao * 1.5);
-    setTimeout(() => {
-        if (grao.parentNode === canvasJogo) {
-            grao.remove();
+    function atualizarCronometro() {
+        tempoRestante--;
+        displayTimer.textContent = tempoRestante;
+
+        if (tempoRestante > 0 && tempoRestante % 10 === 0) {
+            avancarFase();
         }
-    }, tempoDeVida);
-}
 
-function encerrarJogo(porTempo) {
-    jogoAtivo = false;
-    clearInterval(intervaloGerador);
-    clearInterval(intervaloCronometro);
-    
+        if (tempoRestante <= 0) {
+            encerrarJogo(true);
+        }
+    }
+
+    function avancarFase() {
+        faseAtual++;
+        displayLevel.textContent = faseAtual;
+        
+        clearInterval(intervaloGerador);
+        configAtual.tempoAparicao = Math.max(250, configAtual.tempoAparicao * 0.85);
+        configAtual.chanceEstragado = Math.min(0.6, configAtual.chanceEstragado + 0.05);
+        
+        intervaloGerador = setInterval(criarGraoAvancado, configAtual.tempoAparicao);
+    }
+
+    function criarGraoAvancado() {
+        if (!jogoAtivo) return;
+
+        const grao = document.createElement('div');
+        grao.classList.add('grain');
+
+        const sorteioTipo = Math.random();
+        let tipoFinal = 'milho';
+
+        if (sorteioTipo < configAtual.chanceEstragado) {
+            tipoFinal = 'estragado';
+            grao.classList.add('estragado');
+            grao.textContent = '❌';
+        } else {
+            tipoFinal = Math.random() > 0.5 ? 'milho' : 'soja';
+            grao.classList.add(tipoFinal);
+            grao.textContent = tipoFinal === 'milho' ? '🌽' : '🫘';
+        }
+
+        const maxX = canvasJogo.clientWidth - 45;
+        const maxY = canvasJogo.clientHeight - 45;
+        grao.style.left = `${Math.floor(Math.random() * maxX)}px`;
+        grao.style.top = `${Math.floor(Math.random() * maxY)}px`;
+
+        grao.addEventListener('click', () => {
+            if (tipoFinal === 'estragado') {
+                pontuacao = Math.max(0, pontuacao - 15);
+            } else {
+                pontuacao += 10 * faseAtual;
+            }
+            displayScore.textContent = pontuacao;
+            grao.remove();
+        });
+
+        canvasJogo.appendChild(grao);
+
+        const tempoDeVida = Math.max(600, configAtual.tempoAparicao * 1.5);
+        setTimeout(() => {
+            if (grao.parentNode === canvasJogo) {
+                grao.remove();
+            }
+        }, tempoDeVida);
+    }
+
+    function encerrarJogo(porTempo) {
+        jogoAtivo = false;
+        clearInterval(intervaloGerador);
+        clearInterval(intervaloCronometro);
+        
+        btnStartGame.textContent = "Iniciar Colheita";
+        selectDificuldade.disabled = false;
+        canvasJogo.innerHTML = "";
+
+        if (porTempo) {
+            alert(`Tempo esgotado! Sua colheita final foi de ${pontuacao} pontos na Fase ${faseAtual}!`);
+        } else {
+            alert(`Jogo interrompido. Pontuação alcançada: ${pontuacao} pontos.`);
+        }
+    }
+});
