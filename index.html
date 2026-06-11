@@ -27,7 +27,7 @@
 
     <!-- Conteúdo Principal -->
     <main>
-        <!-- Seção de Boas-vindas com Formulário Interativo -->
+        <!-- Seção de Boas-vindas -->
         <section id="identificacao">
             <h2>Bem-vindo ao Portal</h2>
             <div class="form-group">
@@ -38,47 +38,42 @@
             <p id="boas-vindas-msg"></p>
         </section>
 
-        <!-- Seção de Artigos e Novidades Interativa (MANDATÓRIO NÍVEL 4) -->
+        <!-- Seção de Artigos Interativa (Nova) -->
         <section id="artigos">
             <h2>Novidades e Artigos: O Agro no Paraná</h2>
-            <p>Clique nos botões para abrir a leitura completa de cada artigo diretamente no portal.</p>
+            <p>Selecione um dos temas abaixo para expandir e ler o artigo completo sobre sustentabilidade:</p>
             
-            <div class="articles-grid">
-                <article class="article-card">
-                    <h3>Tecnologia no Campo e Sustentabilidade</h3>
-                    <p class="summary">O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas sustentáveis...</p>
-                    <button class="btn-read-article" data-id="tecnologia">Ler Artigo Completo</button>
-                </article>
+            <div class="articles-container">
+                <!-- Artigo 1 -->
+                <div class="article-box">
+                    <button class="btn-artigo" data-artigo="tecnologia">
+                        <span>🌾 Tecnologia no Campo</span>
+                        <span class="seta-status">▼</span>
+                    </button>
+                    <div id="artigo-tecnologia" class="article-content">
+                        <p>O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas tecnológicas e sustentáveis. O uso de sensores de solo, drones para monitoramento e maquinários de alta precisão permite a aplicação exata de recursos, reduzindo o desperdício.</p>
+                        <p>Aliado a isso, o Sistema de Plantio Direto e a rotação de culturas entre milho e soja evitam a erosão, mantêm os nutrientes da terra e diminuem drasticamente o impacto ambiental, garantindo safras fortes e solo saudável para o futuro.</p>
+                    </div>
+                </div>
 
-                <article class="article-card">
-                    <h3>O Equilíbrio Essencial</h3>
-                    <p class="summary">Produzir alimentos de forma eficiente mantendo as florestas e recursos hídricos preservados...</p>
-                    <button class="btn-read-article" data-id="equilibrio">Ler Artigo Completo</button>
-                </article>
-
-                <article class="article-card">
-                    <h3>Manejo de Solo no Paraná</h3>
-                    <p class="summary">A rotação entre as safras de milho e soja protege os nutrientes da terra e evita o desgaste químico...</p>
-                    <button class="btn-read-article" data-id="solo">Ler Artigo Completo</button>
-                </article>
+                <!-- Artigo 2 -->
+                <div class="article-box">
+                    <button class="btn-artigo" data-artigo="equilibrio">
+                        <span>🌳 O Equilíbrio Essencial</span>
+                        <span class="seta-status">▼</span>
+                    </button>
+                    <div id="artigo-equilibrio" class="article-content">
+                        <p>Produzir alimentos de forma eficiente mantendo florestas e recursos hídricos preservados é o maior desafio moderno. No Paraná, leis rígidas e a conscientização dos produtores ajudam a proteger as bacias hidrográficas e as Matas Ciliares.</p>
+                        <p>O equilíbrio se mostra viável quando o produtor entende que a própria floresta em pé protege sua lavoura contra ventos fortes, regula as chuvas locais e atrai polinizadores naturais, provando que ecologia e economia caminham juntas.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Janela Modal Dinâmica para Leitura de Artigos -->
-        <div id="article-modal" class="modal-overlay">
-            <div class="modal-content">
-                <span id="close-modal" class="close-btn">&times;</span>
-                <h3 id="modal-title">Título do Artigo</h3>
-                <div id="modal-body">
-                    <!-- O JavaScript injetará o texto completo aqui -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Seção de Mapas Interativos Avançada -->
+        <!-- Seção de Mapas Interativos -->
         <section id="mapas">
-            <h2>Mapas de Produção Interativa do Paraná</h2>
-            <p>Clique nas regiões do estado abaixo para carregar os dados estatísticos reais de sustentabilidade em tempo real.</p>
+            <h2>Mapas de Production Interativa do Paraná</h2>
+            <p>Clique nas regiões do estado abaixo para carregar os dados estatísticos de sustentabilidade:</p>
             
             <div class="map-controls">
                 <button class="btn-mapa" data-regiao="Norte">Região Norte</button>
@@ -140,13 +135,11 @@
                 <div class="status-item">Pontuação: <span id="score">0</span></div>
             </div>
 
-            <div id="game-canvas">
-                <!-- Os grãos serão gerados dinamicamente via JavaScript aqui -->
-            </div>
+            <div id="game-canvas"></div>
         </section>
     </main>
 
-    <!-- Rodapé com Créditos Obrigatórios -->
+    <!-- Rodapé com Créditos -->
     <footer>
         <p>&copy; 2026 Concurso Agrinho. Desenvolvido por Estudante do Ensino Médio.</p>
         <p>Créditos das mídias: Elementos visuais autorais customizados via ferramentas digitais.</p>
