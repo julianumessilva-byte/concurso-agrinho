@@ -38,20 +38,44 @@
             <p id="boas-vindas-msg"></p>
         </section>
 
-        <!-- Seção de Artigos e Novidades -->
+        <!-- Seção de Artigos e Novidades Interativa (MANDATÓRIO NÍVEL 4) -->
         <section id="artigos">
             <h2>Novidades e Artigos: O Agro no Paraná</h2>
-            <article>
-                <h3>Tecnologia no Campo e Sustentabilidade</h3>
-                <p>O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas sustentáveis, como o plantio direto e a rotação de culturas de milho e soja, reduzindo o impacto ambiental.</p>
-            </article>
-            <article>
-                <h3>O Equilíbrio Essencial</h3>
-                <p>Produzir alimentos de forma eficiente mantendo as florestas e recursos hídricos preservados é o maior desafio e a maior conquista dos produtores paranaenses.</p>
-            </article>
+            <p>Clique nos botões para abrir a leitura completa de cada artigo diretamente no portal.</p>
+            
+            <div class="articles-grid">
+                <article class="article-card">
+                    <h3>Tecnologia no Campo e Sustentabilidade</h3>
+                    <p class="summary">O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas sustentáveis...</p>
+                    <button class="btn-read-article" data-id="tecnologia">Ler Artigo Completo</button>
+                </article>
+
+                <article class="article-card">
+                    <h3>O Equilíbrio Essencial</h3>
+                    <p class="summary">Produzir alimentos de forma eficiente mantendo as florestas e recursos hídricos preservados...</p>
+                    <button class="btn-read-article" data-id="equilibrio">Ler Artigo Completo</button>
+                </article>
+
+                <article class="article-card">
+                    <h3>Manejo de Solo no Paraná</h3>
+                    <p class="summary">A rotação entre as safras de milho e soja protege os nutrientes da terra e evita o desgaste químico...</p>
+                    <button class="btn-read-article" data-id="solo">Ler Artigo Completo</button>
+                </article>
+            </div>
         </section>
 
-        <!-- Seção de Mapas Interativos Avançada (Com Gráficos Dinâmicos) -->
+        <!-- Janela Modal Dinâmica para Leitura de Artigos -->
+        <div id="article-modal" class="modal-overlay">
+            <div class="modal-content">
+                <span id="close-modal" class="close-btn">&times;</span>
+                <h3 id="modal-title">Título do Artigo</h3>
+                <div id="modal-body">
+                    <!-- O JavaScript injetará o texto completo aqui -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Mapas Interativos Avançada -->
         <section id="mapas">
             <h2>Mapas de Produção Interativa do Paraná</h2>
             <p>Clique nas regiões do estado abaixo para carregar os dados estatísticos reais de sustentabilidade em tempo real.</p>
@@ -68,7 +92,6 @@
                     <p id="map-text">Clique em um dos botões acima para analisar os dados ecológicos e econômicos da região.</p>
                 </div>
                 
-                <!-- Gráfico de Indicadores Animado via DOM -->
                 <div class="map-chart-container">
                     <h4>Indicadores de Sustentabilidade (%)</h4>
                     
@@ -111,7 +134,6 @@
                 <button id="btn-start-game">Iniciar Colheita</button>
             </div>
 
-            <!-- Painel de Status do Jogo -->
             <div class="status-panel">
                 <div class="status-item">Fase: <span id="game-level">1</span></div>
                 <div class="status-item">Tempo: <span id="game-timer">30</span>s</div>
