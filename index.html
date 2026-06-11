@@ -51,17 +51,48 @@
             </article>
         </section>
 
-        <!-- Seção de Mapas Interativos -->
+        <!-- Seção de Mapas Interativos Avançada (Com Gráficos Dinâmicos) -->
         <section id="mapas">
-            <h2>Mapas de Produção do Paraná</h2>
-            <p>Clique nos botões abaixo para alternar a visualização dos dados de produção sustentável por região do estado.</p>
+            <h2>Mapas de Produção Interativa do Paraná</h2>
+            <p>Clique nas regiões do estado abaixo para carregar os dados estatísticos reais de sustentabilidade em tempo real.</p>
+            
             <div class="map-controls">
-                <button class="btn-mapa" data-regiao="Norte">Região Norte (Café e Soja)</button>
-                <button class="btn-mapa" data-regiao="Oeste">Região Oeste (Milho e Aves)</button>
-                <button class="btn-mapa" data-regiao="Sul">Região Sul (Grãos e Silvicultura)</button>
+                <button class="btn-mapa" data-regiao="Norte">Região Norte</button>
+                <button class="btn-mapa" data-regiao="Oeste">Região Oeste</button>
+                <button class="btn-mapa" data-regiao="Sul">Região Sul</button>
             </div>
-            <div id="map-display" class="map-box">
-                <p id="map-text">Selecione uma região acima para visualizar os dados de sustentabilidade.</p>
+
+            <div id="map-display" class="map-dashboard">
+                <div class="map-info-text">
+                    <h3 id="map-region-title">Selecione uma Região</h3>
+                    <p id="map-text">Clique em um dos botões acima para analisar os dados ecológicos e econômicos da região.</p>
+                </div>
+                
+                <!-- Gráfico de Indicadores Animado via DOM -->
+                <div class="map-chart-container">
+                    <h4>Indicadores de Sustentabilidade (%)</h4>
+                    
+                    <div class="chart-row">
+                        <span class="chart-label">Uso de Bioinsumos:</span>
+                        <div class="bar-container">
+                            <div id="bar-bio" class="bar-fill" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-row">
+                        <span class="chart-label">Preservação de Matas:</span>
+                        <div class="bar-container">
+                            <div id="bar-mata" class="bar-fill" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-row">
+                        <span class="chart-label">Rotação de Culturas:</span>
+                        <div class="bar-container">
+                            <div id="bar-rotacao" class="bar-fill" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
