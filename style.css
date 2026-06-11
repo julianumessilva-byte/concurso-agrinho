@@ -6,6 +6,7 @@
     --secondary-color: #2ecc71;
     --card-bg: #ffffff;
     --header-bg: #1e7e34;
+    --bar-bg: #e0e0e0;
 }
 
 [data-theme="dark"] {
@@ -15,6 +16,7 @@
     --secondary-color: #27ae60;
     --card-bg: #2d2d2d;
     --header-bg: #114d20;
+    --bar-bg: #444444;
 }
 
 /* --- Estilos Gerais --- */
@@ -119,11 +121,11 @@ section {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* --- Seção de Mapas --- */
+/* --- Painel de Mapas Dinâmicos --- */
 .map-controls {
     display: flex;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
@@ -134,6 +136,7 @@ section {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
     transition: background 0.2s, transform 0.1s;
 }
 
@@ -141,12 +144,52 @@ section {
     background-color: var(--secondary-color);
 }
 
-.map-box {
-    border: 2px dashed var(--primary-color);
+.map-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    border: 2px solid var(--primary-color);
     padding: 20px;
-    border-radius: 5px;
-    background-color: rgba(39, 174, 96, 0.05);
-    min-height: 80px;
+    border-radius: 8px;
+    background-color: rgba(39, 174, 96, 0.02);
+}
+
+.map-chart-container {
+    background-color: rgba(0, 0, 0, 0.02);
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.chart-row {
+    margin-bottom: 12px;
+}
+
+.chart-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.bar-container {
+    width: 100%;
+    background-color: var(--bar-bg);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 22px;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 0.85rem;
+    line-height: 22px;
+    font-weight: bold;
+    width: 0%; /* Alterado dinamicamente via JS */
+    transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
 }
 
 /* --- Painel de Status do Jogo --- */
@@ -193,20 +236,9 @@ section {
     transform: scale(0.8);
 }
 
-.grain.milho {
-    background-color: #f1c40f;
-    border: 2px solid #d35400;
-}
-
-.grain.soja {
-    background-color: #e67e22;
-    border: 2px solid #a04000;
-}
-
-.grain.estragado {
-    background-color: #95a5a6;
-    border: 2px solid #7f8c8d;
-}
+.grain.milho { background-color: #f1c40f; border: 2px solid #d35400; }
+.grain.soja { background-color: #e67e22; border: 2px solid #a04000; }
+.grain.estragado { background-color: #95a5a6; border: 2px solid #7f8c8d; }
 
 /* --- Rodapé --- */
 footer {
@@ -224,6 +256,10 @@ footer {
         text-align: center;
     }
     
+    .map-dashboard {
+        grid-template-columns: 1fr;
+    }
+
     .map-controls, .game-controls {
         flex-direction: column;
         align-items: stretch;
