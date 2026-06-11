@@ -2,17 +2,22 @@
 // CONFIGURAÇÕES E MANIPULAÇÃO DO DOM INICIAIS
 // ==========================================
 
-// Variáveis de Controle Globais do Sistema
 const btnDarkMode = document.getElementById('toggle-dark-mode');
 const btnSaludar = document.getElementById('btn-saludar');
 const inputUsername = document.getElementById('username');
 const msgBoasVindas = document.getElementById('boas-vindas-msg');
+
+const mapRegionTitle = document.getElementById('map-region-title');
 const mapText = document.getElementById('map-text');
+const barBio = document.getElementById('bar-bio');
+const barMata = document.getElementById('bar-mata');
+const barRotacao = document.getElementById('bar-rotacao');
+
 const canvasJogo = document.getElementById('game-canvas');
 const displayScore = document.getElementById('score');
 const btnStartGame = document.getElementById('btn-start-game');
 
-// 1. Funcionalidade: Alternador de Modo Escuro (Acessibilidade Nível 4)
+// 1. Alternador de Modo Escuro (Acessibilidade Nível 4)
 btnDarkMode.addEventListener('click', () => {
     if (document.documentElement.getAttribute('data-theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -21,7 +26,7 @@ btnDarkMode.addEventListener('click', () => {
     }
 });
 
-// 2. Funcionalidade: Processamento de dados via Input do Usuário
+// 2. Processamento do Formulário de Usuário
 btnSaludar.addEventListener('click', () => {
     const nomeUsuario = inputUsername.value.trim();
     if (nomeUsuario !== "") {
@@ -34,21 +39,55 @@ btnSaludar.addEventListener('click', () => {
 });
 
 // ==========================================
-// MANIPULAÇÃO DINÂMICA DA SEÇÃO DE MAPAS
+// PAINEL DE MAPAS E GRÁFICOS DINÂMICOS (MANDATÓRIO NÍVEL 4)
 // ==========================================
 
-// 3. Funcionalidade: Evento para carregar dados fictícios de mapas regionais do PR
+// Coleção de dados estatísticos estruturados para alimentação do dashboard
+const DADOS_MAPA = {
+    Norte: {
+        titulo: "Região Norte (Manejo Integrado)",
+        texto: "Destaque nacional em técnicas de conservação e transição agroecológica. Forte controle biológico de pragas sobre as plantações de soja.",
+        bioinsumos: 75,
+        preservacao: 60,
+        rotacao: 85
+    },
+    Oeste: {
+        titulo: "Região Oeste (Energia Limpa)",
+        texto: "Pioneira no ecossistema de biodigestores. Transforma resíduos da lavoura de milho e da pecuária em eletricidade limpa e sustentável.",
+        bioinsumos: 90,
+        preservacao: 55,
+        rotacao: 70
+    },
+    Sul: {
+        titulo: "Região Sul (Preservação e Grãos)",
+        texto: "Forte aderência ao sistema de plantio direto protetor do solo. Excelente integração com programas estaduais de proteção de matas nativas ciliares.",
+        bioinsumos: 65,
+        preservacao: 88,
+        rotacao: 95
+    }
+};
+
+// 3. Funcionalidade: Manipulação de Múltiplos Elementos Gráficos com Transições
 const botoesMapa = document.querySelectorAll('.btn-mapa');
 botoesMapa.forEach(botao => {
     botao.addEventListener('click', (e) => {
         const regiao = e.target.getAttribute('data-regiao');
-        
-        if (regiao === 'Norte') {
-            mapText.innerHTML = "<strong>Região Norte:</strong> Foco em transição ecológica na cafeicultura e manejo integrado de pragas na soja.";
-        } else if (regiao === 'Oeste') {
-            mapText.innerHTML = "<strong>Região Oeste:</strong> Destaque no uso de biodigestores para produção de energia limpa a partir de resíduos do milho e suínos.";
-        } else if (regiao === 'Sul') {
-            mapText.innerHTML = "<strong>Região Sul:</strong> Fortes práticas de preservação de mata nativa aliada à rotação sustentável de grãos.";
+        const dados = DADOS_MAPA[regiao];
+
+        if (dados) {
+            // Atualiza textos do DOM
+            mapRegionTitle.textContent = dados.titulo;
+            mapText.textContent = dados.texto;
+
+            // Injeta as larguras e dados numéricos animando as barras via CSS
+            barBio.style.width = `${dados.bioinsumos}%`;
+            barBio.textContent = `${dados.bioinsumos}%`;
+            
+            barMata.style.width = `${dados.preservacao}%`;
+            barMata.textContent = `${dados.preservacao}%`;
+            
+            barRotacao.style.width = `${dados.rotacao}%`;
+            barRotacao.textContent = `${dados.rotacao}%`;
         }
     });
 });
@@ -57,14 +96,12 @@ botoesMapa.forEach(botao => {
 // LÓGICA E MECÂNICA DO JOGO AVANÇADO
 // ==========================================
 
-// Configurações base de dificuldade (Complexidade Técnica de Lógica)
 const CONFIG_DIFICULDADE = {
     facil: { tempoAparicao: 1200, chanceEstragado: 0.1, tempoFase: 30 },
     medio: { tempoAparicao: 800, chanceEstragado: 0.25, tempoFase: 25 },
     dificil: { tempoAparicao: 500, chanceEstragado: 0.4, tempoFase: 20 }
 };
 
-// Variáveis de Estado do Jogo
 let pontuacao = 0;
 let faseAtual = 1;
 let tempoRestante = 30;
@@ -73,7 +110,6 @@ let intervaloGerador;
 let intervaloCronometro;
 let configAtual;
 
-// Seleção dos novos elementos do DOM do Jogo
 const selectDificuldade = document.getElementById('select-dificuldade');
 const displayLevel = document.getElementById('game-level');
 const displayTimer = document.getElementById('game-timer');
@@ -101,7 +137,6 @@ function iniciarJogo() {
     btnStartGame.textContent = "Parar Colheita";
     selectDificuldade.disabled = true;
 
-    // Inicialização dos loops assíncronos do motor do jogo
     intervaloGerador = setInterval(criarGraoAvancado, configAtual.tempoAparicao);
     intervaloCronometro = setInterval(atualizarCronometro, 1000);
 }
@@ -110,7 +145,6 @@ function atualizarCronometro() {
     tempoRestante--;
     displayTimer.textContent = tempoRestante;
 
-    // Condição de progressão de Fase dinâmica (A cada 10 segundos acelera)
     if (tempoRestante > 0 && tempoRestante % 10 === 0) {
         avancarFase();
     }
@@ -124,7 +158,6 @@ function avancarFase() {
     faseAtual++;
     displayLevel.textContent = faseAtual;
     
-    // Altera dinamicamente as taxas de tempo e risco para aumentar a dificuldade
     clearInterval(intervaloGerador);
     configAtual.tempoAparicao = Math.max(250, configAtual.tempoAparicao * 0.85);
     configAtual.chanceEstragado = Math.min(0.6, configAtual.chanceEstragado + 0.05);
@@ -141,7 +174,6 @@ function criarGraoAvancado() {
     const sorteioTipo = Math.random();
     let tipoFinal = 'milho';
 
-    // Divisão lógica entre obstáculo ambiental ou grão aproveitável
     if (sorteioTipo < configAtual.chanceEstragado) {
         tipoFinal = 'estragado';
         grao.classList.add('estragado');
@@ -157,7 +189,6 @@ function criarGraoAvancado() {
     grao.style.left = `${Math.floor(Math.random() * maxX)}px`;
     grao.style.top = `${Math.floor(Math.random() * maxY)}px`;
 
-    // Captura do evento de clique e computação do multiplicador de fase
     grao.addEventListener('click', () => {
         if (tipoFinal === 'estragado') {
             pontuacao = Math.max(0, pontuacao - 15);
