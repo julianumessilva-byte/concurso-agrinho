@@ -77,6 +77,33 @@ nav ul li a:hover {
     background-color: var(--primary-color);
 }
 
+/* --- Formulários e Controles --- */
+.form-group {
+    margin: 15px 0;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.game-controls {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.game-controls select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
 /* --- Main Layout --- */
 main {
     max-width: 1200px;
@@ -97,6 +124,7 @@ section {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .btn-mapa, .game-controls button, #btn-saludar {
@@ -121,6 +149,19 @@ section {
     min-height: 80px;
 }
 
+/* --- Painel de Status do Jogo --- */
+.status-panel {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
 /* --- Área do Jogo --- */
 #game-canvas {
     width: 100%;
@@ -134,35 +175,37 @@ section {
 }
 
 .grain {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     position: absolute;
     cursor: pointer;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 12px;
-    color: black;
+    font-size: 1.5rem;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     user-select: none;
+    transition: transform 0.1s;
+}
+
+.grain:active {
+    transform: scale(0.8);
 }
 
 .grain.milho {
-    background-color: #f1c40f; /* Amarelo representando Milho */
+    background-color: #f1c40f;
     border: 2px solid #d35400;
 }
 
 .grain.soja {
-    background-color: #e67e22; /* Laranja representando Soja */
+    background-color: #e67e22;
     border: 2px solid #a04000;
 }
 
-.score-board {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 10px;
+.grain.estragado {
+    background-color: #95a5a6;
+    border: 2px solid #7f8c8d;
 }
 
 /* --- Rodapé --- */
@@ -171,7 +214,7 @@ footer {
     padding: 20px;
     background-color: #2c3e50;
     color: white;
-    margin-top: 5px;
+    margin-top: 20px;
 }
 
 /* --- REQUISITO NÍVEL 4: RESPONSIVIDADE (Media Queries) --- */
@@ -181,10 +224,17 @@ footer {
         text-align: center;
     }
     
-    .map-controls {
+    .map-controls, .game-controls {
         flex-direction: column;
+        align-items: stretch;
     }
     
+    .status-panel {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
     #toggle-dark-mode {
         position: static;
         display: block;
