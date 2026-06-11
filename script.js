@@ -17,7 +17,13 @@ const canvasJogo = document.getElementById('game-canvas');
 const displayScore = document.getElementById('score');
 const btnStartGame = document.getElementById('btn-start-game');
 
-// 1. Alternador de Modo Escuro (Acessibilidade Nível 4)
+// Elementos da Janela Modal de Artigos
+const modal = document.getElementById('article-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+const closeModal = document.getElementById('close-modal');
+
+// 1. Alternador de Modo Escuro
 btnDarkMode.addEventListener('click', () => {
     if (document.documentElement.getAttribute('data-theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -26,7 +32,7 @@ btnDarkMode.addEventListener('click', () => {
     }
 });
 
-// 2. Processamento do Formulário de Usuário
+// 2. Processamento do Nome do Usuário
 btnSaludar.addEventListener('click', () => {
     const nomeUsuario = inputUsername.value.trim();
     if (nomeUsuario !== "") {
@@ -39,35 +45,67 @@ btnSaludar.addEventListener('click', () => {
 });
 
 // ==========================================
-// PAINEL DE MAPAS E GRÁFICOS DINÂMICOS (MANDATÓRIO NÍVEL 4)
+// BANCO DE DADOS E EVENTOS DE ARTIGOS (LEITURA COMPLETA)
 // ==========================================
 
-// Coleção de dados estatísticos estruturados para alimentação do dashboard
+const TEXTOS_ARTIGOS = {
+    tecnologia: {
+        titulo: "Tecnologia no Campo e Sustentabilidade",
+        conteudo: "<p>O estado do Paraná se destaca nacionalmente pela adoção de práticas agrícolas modernas controladas por softwares de monitoramento de precisão.</p><p>Com o auxílio de drones e sensores de umidade no solo, os produtores paranaenses conseguem aplicar fertilizantes e água na quantidade exata demandada pelas plantas, reduzindo drasticamente o desperdício de recursos ambientais.</p><p>Essa sinergia entre inovação tecnológica e conservação é o pilar que garante a longevidade econômica e ecológica do ecossistema produtivo local.</p>"
+    },
+    equilibrio: {
+        titulo: "O Equilíbrio Essencial",
+        conteudo: "<p>Produzir alimentos em escala para alimentar a população mantendo as florestas nativas e bacias hidrográficas intactas é o centro do tema Agrinho 2026.</p><p>O verdadeiro equilíbrio sustentável demonstra que a economia e o meio ambiente não são rivais, mas sim aliados indispensáveis. Áreas com florestas preservadas regulam as chuvas locais, protegendo diretamente as safras comerciais contra estiagens severas de clima.</p>"
+    },
+    solo: {
+        titulo: "Manejo de Solo no Paraná",
+        conteudo: "<p>A terra é o recurso mais precioso do agricultor. No Paraná, a técnica milenar do plantio direto — onde o solo não é revolvido antes da semeadura — impede processos erosivos decorrentes de chuvas fortes.</p><p>Adicionalmente, a rotação planejada entre as culturas de milho de inverno e soja de verão quebra ciclos biológicos de pragas e repõe nitrogênio orgânico nas camadas do solo de maneira totalmente natural, eliminando a dependência excessiva de compostos químicos artificiais.</p>"
+    }
+};
+
+// 3. Funcionalidade: Abertura Dinâmica do Artigo no Modal via Injeção de Conteúdo
+const botoesArtigo = document.querySelectorAll('.btn-read-article');
+botoesArtigo.forEach(botao => {
+    botao.addEventListener('click', (e) => {
+        const idArtigo = e.target.getAttribute('data-id');
+        const artigo = TEXTOS_ARTIGOS[idArtigo];
+
+        if (artigo) {
+            modalTitle.textContent = artigo.titulo;
+            modalBody.innerHTML = artigo.conteudo;
+            modal.classList.add('active'); // Exibe o modal manipulando classes do CSS
+        }
+    });
+});
+
+// Fechar Modal nos gatilhos de clique
+closeModal.addEventListener('click', () => modal.classList.remove('active'));
+window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+});
+
+// ==========================================
+// PAINEL DE MAPAS E GRÁFICOS DINÂMICOS
+// ==========================================
+
 const DADOS_MAPA = {
     Norte: {
         titulo: "Região Norte (Manejo Integrado)",
         texto: "Destaque nacional em técnicas de conservação e transição agroecológica. Forte controle biológico de pragas sobre as plantações de soja.",
-        bioinsumos: 75,
-        preservacao: 60,
-        rotacao: 85
+        bioinsumos: 75, preservacao: 60, rotacao: 85
     },
     Oeste: {
         titulo: "Região Oeste (Energia Limpa)",
         texto: "Pioneira no ecossistema de biodigestores. Transforma resíduos da lavoura de milho e da pecuária em eletricidade limpa e sustentável.",
-        bioinsumos: 90,
-        preservacao: 55,
-        rotacao: 70
+        bioinsumos: 90, preservacao: 55, rotacao: 70
     },
     Sul: {
         titulo: "Região Sul (Preservação e Grãos)",
         texto: "Forte aderência ao sistema de plantio direto protetor do solo. Excelente integração com programas estaduais de proteção de matas nativas ciliares.",
-        bioinsumos: 65,
-        preservacao: 88,
-        rotacao: 95
+        bioinsumos: 65, preservacao: 88, rotacao: 95
     }
 };
 
-// 3. Funcionalidade: Manipulação de Múltiplos Elementos Gráficos com Transições
 const botoesMapa = document.querySelectorAll('.btn-mapa');
 botoesMapa.forEach(botao => {
     botao.addEventListener('click', (e) => {
@@ -75,17 +113,12 @@ botoesMapa.forEach(botao => {
         const dados = DADOS_MAPA[regiao];
 
         if (dados) {
-            // Atualiza textos do DOM
             mapRegionTitle.textContent = dados.titulo;
             mapText.textContent = dados.texto;
-
-            // Injeta as larguras e dados numéricos animando as barras via CSS
             barBio.style.width = `${dados.bioinsumos}%`;
             barBio.textContent = `${dados.bioinsumos}%`;
-            
             barMata.style.width = `${dados.preservacao}%`;
             barMata.textContent = `${dados.preservacao}%`;
-            
             barRotacao.style.width = `${dados.rotacao}%`;
             barRotacao.textContent = `${dados.rotacao}%`;
         }
@@ -214,13 +247,3 @@ function encerrarJogo(porTempo) {
     clearInterval(intervaloGerador);
     clearInterval(intervaloCronometro);
     
-    btnStartGame.textContent = "Iniciar Colheita";
-    selectDificuldade.disabled = false;
-    canvasJogo.innerHTML = "";
-
-    if (porTempo) {
-        alert(`Tempo esgotado! Sua colheita sustentável final foi de ${pontuacao} pontos na Fase ${faseAtual}!`);
-    } else {
-        alert(`Jogo interrompido. Pontuação alcançada: ${pontuacao} pontos.`);
-    }
-}
